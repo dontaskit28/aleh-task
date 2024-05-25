@@ -1,9 +1,30 @@
 import 'package:ale_hospital_task/screens/sos_request.dart';
 import 'package:ale_hospital_task/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class SoSWidget extends StatelessWidget {
+class SoSWidget extends StatefulWidget {
   const SoSWidget({super.key});
+
+  @override
+  State<SoSWidget> createState() => _SoSWidgetState();
+}
+
+class _SoSWidgetState extends State<SoSWidget> {
+  apiCall() async {
+    http.post(
+      Uri.parse('https://api.heartsaver.in/api/v1/sos'),
+      body: {
+        "lattitude": "172.26",
+        "longitude": "78.46",
+        "user_id": "1",
+        "status": "1",
+      },
+    ).then((response) {
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +82,7 @@ class SoSWidget extends StatelessWidget {
           bottom: -55,
           child: InkWell(
             onTap: () {
+              // apiCall();
               Navigator.push(
                 context,
                 MaterialPageRoute(
